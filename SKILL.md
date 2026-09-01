@@ -52,7 +52,9 @@ description: 银行螺丝钉直播/活动PPT成品复核。发给王磊（或任
 
 - **汇总文档**：`PPT复核问题记录`，token `XaWedzNtXo7ePNxmqdMcVqQHnnc`，URL `https://epndqwwg0a.feishu.cn/docx/XaWedzNtXo7ePNxmqdMcVqQHnnc`
 - **所在文件夹**：`PPT复核记录`，token `VIvLfSbW9lw7qGdVPydc2AVGnEf`（挂在"直播文字稿归档"父文件夹 `fldcnOHFCzQqD7knn8pBv8Fqy0A` 下）
-- **写入方式**：每次复核用 `lark-cli docs +update --doc "XaWedzNtXo7ePNxmqdMcVqQHnnc" --command append --content '<h1 seq="auto">PPT标题（期数）</h1><h2 seq="auto">复核（YYYY-MM-DD，N页版）</h2><table>...</table>'` 追加一个新章节，同一份PPT的多轮复核用 `<h2>` 挂在同一个 `<h1>` 下（先用 `docs +fetch --scope outline` 找到对应 `<h1>` 的 block_id，用 `block_insert_after` 插在该 `<h1>` 小节末尾；找不到同名 `<h1>` 才用 `append` 新建一个）。表格列固定为 页码/问题类型/具体描述，语法见 `lark-doc-xml.md`。
+- **排序规则（2026-08-31用户确认）**：文档整体按PPT**倒序**排列，最新复核的PPT排在最前面；同一份PPT内部的多轮复核按时间正序排（第一轮→第二轮→……）。`<h1>`/`<h2>` 一律**不加** `seq="auto"`，标题文字里也不手写编号——只写"第一轮复核""第二轮复核"这种朴素说法，不要出现"1.1""2.1"这类自动编号前缀。
+- **日期标注（2026-08-31用户确认）**：每个 `<h1>`（即每份PPT）标题末尾必须标注日期，格式"（...，直播日期：YYYY-MM-DD）"或"（...，复核日期：YYYY-MM-DD）"——PPT标题/大纲文档里能查到明确直播日期（如"【9.2高净值直播大纲】"）就用直播日期；查不到就用复核当天的日期当"复核日期"。日期标在PPT层级（`<h1>`），不用每轮复核（`<h2>`）重复标注。
+- **写入方式**：新增一份PPT的复核记录时，因为要插到最前面而不是文末，不能用 `append`（那只会加到文档末尾）——先用 `docs +fetch --scope outline` 拿到当前第一个 `<h1>` 的 block_id，用 `block_insert_after --block-id 0`（`0`=文档开头，跳过开头的说明 callout 则改用该 callout 的 block_id）插入新 `<h1>+<h2>+<table>`。同一份PPT追加下一轮复核时，找到该PPT最后一个 `<h2>`（或其表格/说明段落）的 block_id，用 `block_insert_after` 接在后面。表格列固定为 页码/问题类型/具体描述，语法见 `lark-doc-xml.md`。
 - **聊天里只给链接+一句话摘要**（比如"发现X个问题，已写入复核记录文档：<链接>，最需要优先处理的是……"），不要把完整表格再贴一遍到对话框。
 - 不确定是不是真问题的（如某个数据来源标注差异），先问团队核实清楚是不是历史遗留的正常口径，不要不问就当错误报——这条判断仍在写入文档之前做，不因为要写文档就放松核实标准。
 
