@@ -1,6 +1,6 @@
 # ppt-review
 
-银行螺丝钉直播/活动 PPT 成品复核 skill，供 Claude Code 使用。这是一个私有仓库，是 `ppt-review` skill 的**源代码托管地**——本地生效路径是 `~/.agents/skills/ppt-review/`（symlink 到 `~/.claude/skills/ppt-review/`）。
+银行螺丝钉直播/活动 PPT 成品复核 skill，供 Claude Code 使用。这是一个私有仓库，是 `ppt-review` skill 的**源代码托管地**——本地生效路径是 `~/Projects/银行螺丝钉直播/.agents/skills/ppt-review/`（`~/.claude/skills/ppt-review` 软链接到这里，2026-11-23 修复）。
 
 ## 这个 skill 做什么
 
@@ -30,6 +30,7 @@
 ```
 SKILL.md                     复核流程、技术边界、输出格式
 references/
+  定稿后反馈收集.md           每期定稿后收集反馈、沉淀新规则的步骤和收集记录
   历史问题库.md               复核检查项的完整知识来源（数据/图表/逻辑/版式/文字/流程十大类历史真实踩坑+速查表）
 scripts/
   review_deck.py              只读复核工具：导出每页字号/字体/颜色结构化数据、导出每页PNG
